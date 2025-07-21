@@ -25,7 +25,12 @@ export class AuthService {
     const user = await this.prisma.user.create({
       data: { email: dto.email, password: hashed },
     });
-    return { id: user.id, email: user.email, createdAt: user.createdAt };
+
+    return await this.login({
+      email: user.email,
+      password: dto.password,
+    });
+
   }
 
   async login(dto: LoginDto) {
@@ -37,6 +42,6 @@ export class AuthService {
     if (!valid) throw new UnauthorizedException('Invalid credentials');
     const payload = { userId: user.id, email: user.email };
     const token = await this.jwtService.signAsync(payload);
-    return { access_token: token };
+    return { access_token: token, user };
   }
 }
