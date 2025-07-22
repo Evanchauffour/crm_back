@@ -12,7 +12,6 @@ import { ClientService } from './client.service';
 import { CreateClientDto } from './dto/create-client.dto';
 import { UpdateClientDto } from './dto/update-client.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { GetUser } from '../auth/get-user.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('clients')
@@ -27,12 +26,6 @@ export class ClientController {
   @Get()
   findAll() {
     return this.clientService.findAll();
-  }
-
-  @Get('me')
-  getMe(@GetUser() user: Record<string, any>) {
-    // Example: return the authenticated user's info
-    return user;
   }
 
   @Get(':id')

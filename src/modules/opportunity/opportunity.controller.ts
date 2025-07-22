@@ -12,7 +12,6 @@ import { OpportunityService } from './opportunity.service';
 import { CreateOpportunityDto } from './dto/create-opportunity.dto';
 import { UpdateOpportunityDto } from './dto/update-opportunity.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { GetUser } from '../auth/get-user.decorator';
 
 @UseGuards(JwtAuthGuard)
 @Controller('opportunities')
@@ -27,12 +26,6 @@ export class OpportunityController {
   @Get()
   findAll() {
     return this.opportunityService.findAll();
-  }
-
-  @Get('me')
-  getMe(@GetUser() user: Record<string, any>) {
-    // Example: return the authenticated user's info
-    return user;
   }
 
   @Get(':id')
